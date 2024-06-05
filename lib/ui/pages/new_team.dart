@@ -1,12 +1,14 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volleyball/database/app_database.dart';
 import 'package:volleyball/utils/team_provider.dart';
 
 class NewTeam extends StatefulWidget {
   const NewTeam({super.key});
 
   @override
-  _NewTeamState createState() => _NewTeamState();
+  State<NewTeam> createState() => _NewTeamState();
 }
 
 class _NewTeamState extends State<NewTeam> {
@@ -24,8 +26,8 @@ class _NewTeamState extends State<NewTeam> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Limite de Times Alcançado'),
-        content: const Text('Você não pode adicionar mais de 6 times.'),
+        title: const Text('Limit Reached'),
+        content: const Text('You can not add more than 6 teams'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -79,14 +81,16 @@ class _NewTeamState extends State<NewTeam> {
                         final int? numberOfPlayers = int.tryParse(_numberOfPlayersController.text);
 
                         if (name.isNotEmpty && numberOfPlayers != null) {
-                          final newTeam = Team(name, numberOfPlayers);
-                          final teamAdded = Provider.of<TeamProvider>(context, listen: false).addTeam(newTeam);
+                          final newTeam = TeamsCompanion(
+                            name: drift.Value(name),
+                            numberOfPlayers: drift.Value(numberOfPlayers),
+                          );
 
-                          if (teamAdded) {
-                            Navigator.pop(context);
-                          } else {
-                            _showErrorDialog(context);
-                          }
+                          Provider.of<TeamProvider>(context, listen: false).addTeam(newTeam);
+
+                          Navigator.pop(context);
+                        } else {
+                          _showErrorDialog(context);
                         }
                       },
                       color: Colors.blue[800],
