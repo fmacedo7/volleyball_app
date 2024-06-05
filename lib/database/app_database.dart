@@ -3,8 +3,7 @@ import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
-import 'package:volleyball/models/team.dart';
-import '../utils/team_provider.dart';
+import '../models/team.dart';
 
 part 'app_database.g.dart';
 
