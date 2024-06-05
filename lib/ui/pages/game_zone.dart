@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:volleyball/theme/colors.dart';
 import 'package:volleyball/ui/widgets/function_buttons.dart';
 import 'package:volleyball/ui/widgets/landscape_widget.dart';
 import 'package:volleyball/ui/widgets/play_zone_game.dart';
+import 'package:volleyball/utils/score_provider.dart';
 
 import '../widgets/team_side.dart';
 
@@ -48,22 +50,34 @@ class GameZone extends StatelessWidget {
                       FunctionButtons(
                         icon: Icons.add,
                         text: 'Ace',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamAScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         text: 'Attack',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamAScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         text: 'Block',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamAScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         text: 'Error',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamAScore();
+                        },
                       ),
                     ],
                   ),
@@ -87,21 +101,28 @@ class GameZone extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          PlayZoneGame(
-                            width: screenWidth * 0.25,
-                            height: screenWidth * 0.2,
-                            score: 1,
-                            image: 'assets/ui/icons/volleyball.png',
+                          Consumer<ScoreProvider>(
+                            builder: (context, scoreProvider, child) {
+                              return PlayZoneGame(
+                                width: screenWidth * 0.25,
+                                height: screenWidth * 0.2,
+                                score: scoreProvider.teamAScore,
+                              );
+                            },
                           ),
                           Container(
                             color: Colors.white,
                             height: screenWidth * 0.15,
                             width: 3,
                           ),
-                          PlayZoneGame(
-                            width: screenWidth * 0.25,
-                            height: screenWidth * 0.2,
-                            score: 3,
+                          Consumer<ScoreProvider>(
+                            builder: (context, scoreProvider, child) {
+                              return PlayZoneGame(
+                                width: screenWidth * 0.25,
+                                height: screenWidth * 0.2,
+                                score: scoreProvider.teamBScore,
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -115,9 +136,11 @@ class GameZone extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const GameZone()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const GameZone(),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -157,25 +180,37 @@ class GameZone extends StatelessWidget {
                         icon: Icons.add,
                         iconPosition: IconPosition.right,
                         text: 'Ace',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamBScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         iconPosition: IconPosition.right,
                         text: 'Attack',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamBScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         iconPosition: IconPosition.right,
                         text: 'Block',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamBScore();
+                        },
                       ),
                       FunctionButtons(
                         icon: Icons.add,
                         iconPosition: IconPosition.right,
                         text: 'Error',
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<ScoreProvider>(context, listen: false)
+                              .incrementTeamBScore();
+                        },
                       ),
                     ],
                   ),
