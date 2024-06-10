@@ -5,7 +5,8 @@ import 'package:volleyball/database/app_database.dart';
 import 'package:volleyball/utils/team_provider.dart';
 
 class NewTeam extends StatefulWidget {
-  const NewTeam({super.key});
+  final VoidCallback? onPressed;
+  const NewTeam({super.key, this.onPressed});
 
   @override
   State<NewTeam> createState() => _NewTeamState();

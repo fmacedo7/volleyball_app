@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volleyball/database/app_database.dart';
 import 'package:volleyball/theme/colors.dart';
 import 'package:volleyball/theme/text_styles.dart';
-import 'package:volleyball/ui/pages/game_zone.dart';
 import 'package:volleyball/ui/pages/new_team.dart';
+import 'package:volleyball/ui/pages/team_vs_team.dart';
 import 'package:volleyball/ui/widgets/volley_teams.dart';
 import 'package:volleyball/utils/team_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: backgroundScreenColor,
       body: SafeArea(
@@ -81,12 +89,14 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Scroll
                         Consumer<TeamProvider>(
                             builder: (context, teamProvider, child) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: teamProvider.teams.map((team) {
                               return VolleyTeams(
+                                onPressed: (){},
                                 teamName: team.name,
                                 numberPlayers: team.numberOfPlayers,
                                 screenWidth: screenWidth,
@@ -94,6 +104,7 @@ class HomeScreen extends StatelessWidget {
                             }).toList(),
                           );
                         }),
+                        // Scroll
                       ],
                     ),
                   ],
@@ -110,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const GameZone()));
+                            builder: (context) => const TeamVsTeam()));
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -143,7 +154,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => NewTeam()));
+              context, MaterialPageRoute(builder: (context) => const NewTeam()));
         },
         backgroundColor: Colors.blue[800],
         child: const Icon(Icons.add),

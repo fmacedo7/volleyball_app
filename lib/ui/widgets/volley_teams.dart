@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class VolleyTeams extends StatelessWidget {
   final String teamName;
   final int numberPlayers;
   final double screenWidth;
+  final VoidCallback onPressed;
 
   const VolleyTeams(
       {super.key,
       required this.teamName,
       required this.numberPlayers,
-      required this.screenWidth,
+      required this.screenWidth, required this.onPressed,
       });
 
   @override
@@ -49,6 +49,7 @@ class VolleyTeams extends StatelessWidget {
         SizedBox(
           width: screenWidth * 0.03,
         ),
+        IconButton(onPressed: onPressed, icon: const Icon(Icons.delete_forever),),
       ],
     );
   }
